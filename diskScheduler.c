@@ -11,10 +11,11 @@ void clook(int d[], int heads);
 
 #define ELEMENTS 8 
 
-int main()
+int main(int argc, char** argv[])
 {
 
-    int h = 50; // head 
+    int h = argv[1]; // argument for head 
+    //int h = 50; // head 
 
     srand(time(NULL)); 
     int random = rand() % 1000; 
