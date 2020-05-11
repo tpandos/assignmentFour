@@ -39,25 +39,26 @@ int main(int argc, char* argv[])
 // first come first serve FCFS
 void fcfs(int arr[], int heads)
 {
-    int cylinders = 0; 
+    int headMovs = 0; 
+    headMovs = abs(heads - arr[0]); 
 
-    cylinders = abs(heads - arr[0]); 
-    printf("Cyclinders: %d\n", abs(heads - arr[0])); 
+    //printf("Cyclinders: %d\n", abs(heads - arr[0])); 
     
-    for(int i = 0; i < ELEMENTS -1;  i++)  // i < (array length - 1)
+    for(int i = 0; i < ELEMENTS-1;  i++)  // i < (array length - 1)
     {
-            cylinders = cylinders + abs(arr[i+1] - arr[i]); 
+            headMovs = headMovs + abs(arr[i+1] - arr[i]); 
             // printf("Cyclinders: %d\n", abs(arr[i+1] - arr[i] )); 
     }
-    printf("Total Cyclinders FCFS: %d\n", cylinders); 
+    printf("Total head moves for FCFS: %d\n", headMovs); 
 }
 
-// SSTF
+//================================================================= SSTF
 void sstf(int arr[], int heads)
 {
     int temp[ELEMENTS]; 
     copyArr(arr,temp); 
-    int mov = 0; 
+
+    int cylMovs = 0; 
     int index[ELEMENTS]; 
     int min, mini; 
     int a[ELEMENTS]; 
@@ -89,23 +90,25 @@ void sstf(int arr[], int heads)
         temp[mini] = 999;
     } // the request that is processed its value is changed so that it is not processed again
      
-    mov = mov + abs(cp1 - a[0]);    // head movement
+    mcylMovsov = cylMovs + abs(cp1 - a[0]);    // head movement
 
     for(int i = 1; i < ELEMENTS; i++)
     {
-        mov = mov + abs(a[i] - a[i-1]); ///head movement
-        printf(" -> %d",a[i]);
+        cylMovs = cylMovs + abs(a[i] - a[i-1]); ///head movement
+        //printf(" -> %d",a[i]);
     }   
-    printf("\n");
-    printf("Cylinders SSFT %d\n",mov);
+    //printf("\n");
+    printf("\nTotal head moves for SSFT %d\n",cylMovs);
 }
 
+//=============================================================SCANA
 void scanA(int arr[], int heads)
 {
     int d[ELEMENTS]; 
     copyArr(arr, d); 
+
     int n = ELEMENTS; 
-    int sum = 0;
+    int cylMovs = 0;
     //int d[20];
     //int disk;  //loc of head
     int temp, max = 0;  
@@ -159,20 +162,20 @@ void scanA(int arr[], int heads)
     {
         //printf("%d-->",d[i]);
           printf("d[i+1]: %d - d[i]: %d\n",d[i-1], d[i]);
-          sum = sum + abs(d[i-1] - d[i]); 
+          cylMovs = cylMovs + abs(d[i-1] - d[i]); 
     }
 
-    sum=sum +max;
-    printf("\nmovement of total cylinders SCAN %d\n",sum);
+    cylMovs = cylMovs + max;
+    printf("\nTotal head moves for SCAN %d\n",cylMovs);
     //getch();
 }
-
+//=======================================================CSCAN
 void cscan(int arr[], int heads)
 {
     int d[ELEMENTS]; 
     copyArr(arr, d); 
      int n = ELEMENTS; 
-    int sum = 0;
+    int cylMovs = 0;
     //int d[20];
     //int disk;  //loc of head
     int temp, max = 0;  
@@ -214,11 +217,11 @@ void cscan(int arr[], int heads)
     {
         //printf("%d-->",d[i]);
         printf("d[i-1]: %d - d[i]: %d\n",d[i-1], d[i]);
-        sum = sum + abs(d[i-1] - d[i]); 
+        cylMovs = cylMovs + abs(d[i-1] - d[i]); 
     }
 
     printf("199 - %d\n", d[n-1]); 
-    sum = sum + abs(200 - d[n-1]);
+    cylMovs = cylMovs + abs(200 - d[n-1]);
     //sum = sum + 199;
     max =  d[0];
     printf("d[0]: %d\n", d[0]); 
@@ -230,18 +233,18 @@ void cscan(int arr[], int heads)
         printf("d[i]: %d - d[i+1]: %d\n",d[i], d[i+1]); 
     }
 
-    max=sum +max;
-    printf("\nmovement of total cylinders SCAN %d\n",sum);
+    max=cylMovs +max;
+    printf("\nTotal head moves for SCAN %d\n",cylMovs);
     //getch();
 }
 
-
+//=========================================================CLOOK 
 void clook(int arr[], int heads)
 {
     int d[ELEMENTS]; 
     copyArr(arr,d); 
     int n = ELEMENTS; 
-    int sum = 0;
+    int cylMovs = 0;
     //int d[20];
     //int disk;  //loc of head
     int temp, max = 0;  
@@ -282,9 +285,9 @@ void clook(int arr[], int heads)
     {
         //printf("%d-->",d[i]);
         printf("d[i-1]: %d - d[i]: %d\n",d[i-1], d[i]);
-        sum = sum + abs(d[i-1] - d[i]); 
+        cylMovs = cylMovs + abs(d[i-1] - d[i]); 
     }
-    sum = sum + abs(d[n-1] - d[0]);
+    cylMovs = cylMovs + abs(d[n-1] - d[0]);
     printf("%d - %d\n", d[n-1],d[0]); 
 
     printf("\n"); 
@@ -297,11 +300,12 @@ void clook(int arr[], int heads)
         printf("d[i]: %d - d[i+1]: %d\n",d[i], d[i+1]); 
     }
 
-    sum=sum +max;
-    printf("\nmovement of total cylinders SCAN %d\n",sum);
+    cylMovs=cylMovs +max;
+    printf("\nTotal head moves for SCAN %d\n",cylMovs);
     //getch();
 }
 
+//========================= COPY ARRAY CONTENTS 
 void copyArr(int original[], int temp[])
 {
     for(int i = 0; i < ELEMENTS; i++)
